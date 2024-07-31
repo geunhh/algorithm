@@ -23,3 +23,7 @@ for change in changes:
         break
 
 
+#%%
+
+set((1,2)) == {1,4, 2}
+        
