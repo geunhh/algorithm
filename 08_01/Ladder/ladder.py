@@ -25,12 +25,6 @@ def find_road(j, arr): # x : 99
     return j
 
 
-
-
-
-
-
-
 for test_case in range(1, 11):
     N = int(input()) # 배열의 크기
     arr = []
