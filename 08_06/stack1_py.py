@@ -1,4 +1,4 @@
-
+#%%
 def stack(item):
     global top
     top+=1
