@@ -1,7 +1,7 @@
-import sys
-sys.stdin = open('container.txt')
+
 
 '''
+1
 3 2
 1 5 3
 8 3
@@ -20,11 +20,15 @@ for tc in range(1, T+1):
     truck.sort(reverse=True)
     container.sort(reverse=True)
 
+
     print(truck)
     print(container)
-
-    for con in container:
-        for i in range(len(truck):
-            truck[i]
+    sum =0
+    for truck_i in range(M):
+        for con_i in range(len(container)):
+            if truck[truck_i] - container[con_i] >=0:                
+                sum += container[con_i]
+                container.pop(0)
+    print(sum)
 
     break
