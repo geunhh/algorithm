@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .item {
+            height: 100px;
+            width: 20px;
+            color: white;
+            font-size: 3rem;
+            background-color: brown;
+            flex-basis: auto;
+
+        }
+
+        .item-1 {
+            background-color: red;
+            flex-grow: 1;
+        }
+        .item-2 {
+            background-color: blue;
+            flex-grow: 2;
+            flex-basis: 0px;
+        }
+        .item-3 {
+            background-color: violet;
+            flex-grow: 5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item item-1">1</div>
+        <div class="item item-2">2</div>
+        <div class="item item-3">3555</div>
+        <div class="item">4</div>
+        <div class="item">4</div>
+        <div class="item">4</div>
+    </div>
+</body>
+
+</html>

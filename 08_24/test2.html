@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container{
+            position: relative;
+            height: 300px;
+            width: 300px;
+            border :1px solid black;
+        }
+        .box{
+            height: 100px;
+            width: 100px;
+            border: 1px solid black;
+        }
+        .static{
+            position: static;
+            background-color: lightblue;
+            /* top bottom 적용 안됌 */
+        }
+        .relative{
+            position: relative;
+            background-color: lightcyan;
+            top: 100px;
+            left: 100px;
+            /* absolute 요소가 absolute가 아니라 static이었으면, 얘는 한칸 밑에 위치했을겨
+            absolute가 되면서 1,0 위치가 비었고, 이친구의 원래 위치는 1,0인데 시각적으로만 2,1에 있음.
+            그래서 새로운 static box를 삽입하면  2,0에 위치하게 됨. 
+            fixed와 absolute는 흐름에서 제외.*/
+        }
+        .absolute{
+            position: absolute;
+            background-color: lightcoral;
+            left: 170px;
+            /* 부모요소 여기서는 container를 기준으로 움직임. */
+        }
+        .fixed{
+            position: fixed;
+            background-color: aquamarine;
+            top: 0;
+            right: 0;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="box static">static</div>
+        <div class="box absolute">absolute</div>
+        <div class="box relative">relative</div>
+        <div class="box fixed">fixed</div>
+        <div class="box" style="background-color: darkblue;">new</div>
+
+    </div>
+</body>
+</html>

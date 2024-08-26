@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 50%;
+            height: 300px;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap; 
+            justify-content: center;
+            justify-content: flex-end;
+            /* align-content: strech;  */
+            align-content: space-around; 
+            /* align-items: center; */
+            /* y축 정렬. center, flex-start|end */
+
+            /* item들이 한 행에 들어가지 않을 경우 다음 칸에 넣을건지?? */
+        }
+        .item {
+            height: 100px; width: 100px; color: black;            
+            font-size: 50px;
+            background-color: lightgray;
+            border: 1px solid blueviolet;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="flex-direction: row;">
+        <div class="item" style="align-self: flex-end;">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">4</div>
+        <div class="item">4</div>
+    </div>
+    <!-- <div class="container">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div> -->
+    
+
+</body>
+
+</html>
