@@ -29,8 +29,6 @@ for tc in range(1,T+1):
             left[i//2] = i
         else:
             right[i//2] = i
-    # print(left)
-    # print(right)
     cnt=0
     inorder(1)
     print(f'#{tc} {result[1]} {result[n//2]}')

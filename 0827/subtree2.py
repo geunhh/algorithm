@@ -29,8 +29,8 @@ for tc in range(1,int(input())+1):
         else:
             right[p] =c
 
-    # print(left)
-    # print(right)
+    print(left)
+    print(right)
 
     subtree(S)
     print(f'#{tc} {cnt}')
