@@ -22,7 +22,7 @@ def insert(node,graph):
     index+=1
     insert(2*node+1,graph)
 
-numbers=[7,95,5]
+numbers=[47,95,5]
 answer = []
 for N in numbers:
     index = 0
@@ -36,8 +36,11 @@ for N in numbers:
         binary_num = '0'+binary_num
     for i in range(y):
         graph[i+1] = -1
+    print(graph)
 
     insert(1,graph)
+    print(graph)
     result = check(1,graph)
     answer.append(result)
+    break
 print(answer)
