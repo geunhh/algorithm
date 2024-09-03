@@ -25,6 +25,7 @@ def insert(node,graph):
     index+=1                            # 이진수의 다음 인덱스 값 넣어줌.
     insert(2*node+1,graph)
 
+<<<<<<< HEAD
 ### main #####
 numbers=[7,95,5]                          # input을 얘로 줬구요
 answer = []                               # list를 반환해야해서 만들었습니다.
@@ -42,9 +43,27 @@ for N in numbers:
         binary_num = '0'+binary_num     
         # 42의 경우에 101010 인데 포화이진이 되려면 0101010이 되야 함.
     for i in range(y):                    # 이건 왜했지
+=======
+numbers=[47,95,5]
+answer = []
+for N in numbers:
+    index = 0
+    binary_num=bin(N)[2:]
+    graph = defaultdict(int)
+    # 높이 및 생성 노드수 구하기
+    cur_y = len(binary_num)
+    h = math.floor(math.log2(cur_y))    # 높이수
+    y = 2**(h+1)-1                      # 노드수
+    while len(binary_num) <y:
+        binary_num = '0'+binary_num
+    for i in range(y):
+>>>>>>> 2bc13cfffcb22a57206d31e57f4a8a95f8d1129c
         graph[i+1] = -1
+    print(graph)
 
     insert(1,graph)
+    print(graph)
     result = check(1,graph)
     answer.append(result)
+    break
 print(answer)
