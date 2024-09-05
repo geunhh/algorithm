@@ -8,56 +8,70 @@
 
 import sys
 sys.stdin = open('hoeny.txt')
-
-def honey(idx,jdx,honey_box,visited,level):
-    if idx > N or jdx >= N-M+1:
-        return
-
-    # 종료조건
-    if level >= 2:
-        return
-
-    # 꿀통에 넣어주기.
-    for k in range(M):
-        honey_box.append(lst[idx][jdx+k])
-        visited.append((i,j+k))
-    # 만약 꿀통에 넣은 애들 총량이 C를 넘는다면?
-        # 꿀통 수정해주기.
-    # print(honey_box)
-    # print(visited)
-    if level==1:
-        for next_j in range(jdx, N - M + 1):
-            print(idx, next_j)
-            honey(idx, next_j, honey_box, visited, level + 1)
-        print('세로')
-    else:
-        # j+1해준거(가로)
-        for next_j in range(jdx+M,N-M+1):
-            print(idx,next_j)
-            honey(idx,next_j,honey_box,visited,level+1)
-        print('세로')
-
-    # # i+1해준거(세로)
-    for next_i in range(N):
-        print(next_i,0)
-        honey(idx+next_i,0,honey_box,visited,level+1)
-
-    print('먀먀먀')
+from itertools import combinations
 
 
-    pass
+'''
+profit을 계산할 함수.
+'''
+def clac_profit(honey_comb):
+    max_profit =0
+    for com_len in range(1, M+1):                           # 1~M 사이로 조합의 길이를 정해서 포문
+        honeys = list(combinations(honey_comb, com_len))    # 조합을 만들고 list로 변환해줌
+        for honey in honeys:                                # 부분조합 하나씩 뜯어봄
+            if c >= sum(honey):                             # 총합이 c보다 작으면
+                cur_profit = 0
+                for hony in honey:                          # 부분조합의 요소 제곱을 cur_profit에 더함
+                    cur_profit += hony ** 2
+
+                if max_profit < cur_profit:                 # 부부조합 중에서 가장 큰 친구 갱신
+                    max_profit = cur_profit
+    return max_profit
+
+
+
 
 for tc in range(1, int(input())+1):
     N, M, c = map(int, input().split())
     lst = [list(map(int, input().split())) for _ in range(N)]
-    # print(lst,M,c)
-    result = 0
+    max_total_profit = 0
 
-    # 채취한 꿀통의 위치를 저장.
     for i in range(0,N):
-        for j in range(0,N-M+1):
-            honey(i,j,[],[],0)
+        for j in range(N-M+1):
 
-            break
-            # 함수 호출.
-    break
+            '''
+            1 번 친구 먼저 진행.
+            '''
+            honey_comb1 = lst[i][j:j+M]         # 범위에 따른 list 생성
+            cur_honey=sum(honey_comb1)          # 꿀통들의 합
+            profit1 = 0
+
+            # 만약 profit이 c 미만이다?
+            if cur_honey <= c:
+                for honey in honey_comb1:       # 바로 계산
+                    profit1 += honey ** 2
+            # 초과한다??
+            else :
+                profit1 = clac_profit(honey_comb1)  # 부분집합 속에서 가장 큰 값 구해야함
+
+            #2. 이제 player 2 검사해볼까
+
+            for i2 in range(i,N):
+                # 1번 친구와 같은 행에 있다면,
+                if i2 == i:
+                    for j2 in range(j+M, N-M+1):                     # 해당 열 이후로
+                        profit2 = clac_profit(lst[i2][j2:j2+M])      # 함수 호출
+                        max_total_profit = max(max_total_profit, profit1 + profit2) # 결과값 맥스 갱신.
+
+                # 같은 행이 아니라면, 다 검사
+                else:
+                    for j2 in range(N-M+1):
+                        profit2 = clac_profit(lst[i2][j2:j2+M])
+                        max_total_profit = max(max_total_profit, profit1 + profit2)
+
+
+    print(f'#{tc} {max_total_profit}')
+
+
+
+
