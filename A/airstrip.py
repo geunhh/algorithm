@@ -6,79 +6,62 @@ sys.stdin = open('airstrip.txt')
 높이차가 1이고, 낮은 지형으 ㅣ높이가 동일하게 연속되는 곳에 설치 가능.
 
 j값을 먼저 검사. 
+
 같으면 continue해주는데, cnt+1, cnt로 시작점 알아볼겨.
-다르면 cnt에 따라서 경사로가 설치될 수 있는지 확인.
-1. cnt >= k 
-    1) cnt >= 2*k : 무조건 설치 가능
-    2) 그게 아니라면, 양 옆의 값이 하나는 크고 하나는 작아야 함.
-        + 만약 cur_v가 bef_v보다 크면, 반대쪽이 작아야함. 
-                                (cur_j-cnt-1)
-        + 둘 다 작으면 cnt=1,j+=1 continue
-2. cnt < k:
-    1) 다시 시작. cnt=1,j+=1
+
+다르면 cnt에 따라서 경사로가 설치될 수 없는지 확인.
+1. mapp[j]와 mapp[j-1]의 높이차가 2이상이면 애초에 불가능 바로 return
+
+2. mapp[j]와 mapp[j-1]이 같은 높이다? 그럼 cnt하나 올려주고, 한칸 이동
+3. mapp[j]와 mapp[j-1]이 다른 높이다? 
+    1) j가 j-1보다 높을 때
+        cnt 가 k보다 작으면 -> 설치 못하니까 return
+        cnt 가 k 보다 높다? -> 설치가능하니까 j+=1 하고 cnt 1로 continue
+    2) j가 j-1보다 낮을 때
+        1. 뒷 구간에 충분한 공간이 있는지 확인.
+          1-1 있다면 설치하고 다음 구간 탐색
+          1-2 없다면 return
     
-마지막에 while문이 끝나버리면,
-저장된 cnt값과 -cnt-1 을 이용해서 경사로 설치할 수 있는지 다시 확인.
- 
-
-
+    
+while이 무사히 끝나면, result +=1
 '''
 def check(mapp,X):
     global result
     j = 1
     before_val = mapp[0]
     cnt=1
+
     while j < N:
-        # 같은 값이 나오면
+        # 두칸의 높이 차가 2 이상이면 연결 불가.
+        if abs(mapp[j] - mapp[j-1]) > 1:
+            return
+
+        # 같은 높이일 때
         if mapp[j] == mapp[j-1]:
             cnt+=1
             j+=1
             continue
-        # 다른 값이 나오면
-        else:
-            # cnt가 k이상이다?
-            if cnt >= X:
-                # cnt가 k의 2배일 때 + mapp의 좌우에 더 높은 곳이 한 곳이라고 있다면
-                if cnt >= 2*X and (mapp[j] < mapp[j-1] or mapp[j-cnt-1] > mapp[j-1]):
-                    result += 1
-                    break
-                # cnt가 k보다 크거나 같을 때
-                else:
-                    # 시작이 벽
-                    if j-cnt == 0 :
-                        if mapp[j]>mapp[0]:
-                            result += 1
-                            break
-                        else:
-                            cnt=1
-                            j+=1
-                            continue
 
-                    # cnt 구간 좌우 중 한쪽은 높고 한쪽은 낮으면,
-                    elif (mapp[j] > mapp[j-1] and mapp[j-cnt-1] < mapp[j-1]) or\
-                       (mapp[j] < mapp[j-1] and mapp[j-cnt-1] > mapp[j-1]):
-                        result +=1
-                        break
-                    else:
-                        cnt=1
-                        j+=1
-                        continue
-            # cnt가 k보다 작을 때
-            else:
-                cnt=1
-                j+=1
-                continue
+        # 다른 값이 나오면 현재가 더 높을 떄 -> 이전에 활주로 설치 가능한가?
+        elif mapp[j] == mapp[j-1]+1:
+            if cnt < X:
+                return
+            cnt = 1
+            j+=1
+            continue
+        # 현재가 낮아졌을 때 -> 다음에 올 수 있는가?
+        elif mapp[j] == mapp[j-1]-1:
+            # 이후에 공간 확인
+            for k in range(j,j+X):  # 활주로 올 구간까지 사악 검사하는데,
+                if k >= N or mapp[k] != mapp[j]: # 구간을 넘어가거나, 다른 애가 나오면 컷.
+                    return
+            # 그렇지 않으면 계속 검사.
+            j+=X    # 근데 이번엔 X만큼 옮겨서 고고싱
+            cnt=0   # 0 or 1
+            continue
     # break 없이 끝났을 때
-    else:
-        if cnt >=X and mapp[N-1] < mapp[N-cnt-1]:
-            result+=1
-
+    result+=1
     return
-
-
-
-
-
 
 
 for tc in range(1,int(input())+1):
@@ -93,14 +76,13 @@ for tc in range(1,int(input())+1):
 
 
     # 세로
+    # 전치행렬 만들어줘야지.
     col_map=[[] for _ in range(N)]
     for i in range(N):
         for j in range(N):
-            col_map[i].append(row_map[j][i])
+            col_map[i].append(row_map[j][i])    # 세로로 입력되게 따로 만들어버림
 
     for j in range(N):
         check(col_map[j],X)
 
-    print(result)
-
-    break
+    print(f'#{tc} {result}')
