@@ -62,3 +62,7 @@ print('A energy : ',A_energy)
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fa34ca0088ef9cfbd0ddc6a9d3525c66aed24ddc
